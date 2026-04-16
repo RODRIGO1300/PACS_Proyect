@@ -29,7 +29,7 @@ exports.getAllUsuarios = async(index = 1, limit = 10)=>{
 exports.getByIDUsuario = async(id)=>{
     const result = await onResultMySQL(async(db)=>{
         const [rows] = await db.query(
-            "SELECT idUsuario, nombre, apellidoP, apellidoM, username, estatus AS activo FROM usuario WHERE idUsuario = ? AND estatus = 1",
+            "SELECT * FROM usuario WHERE idUsuario = ? AND estatus = 1",
             [id]
         )
         return rows.length > 0 ? rows[0] : null
