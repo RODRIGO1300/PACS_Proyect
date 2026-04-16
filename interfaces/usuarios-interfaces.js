@@ -1,5 +1,5 @@
 const _UtilResponse = require('../helpers/helper-response')
-const usuarioController = require('../controllers/usuario-controller')
+const usuarioController = require('../controllers/usuarios-controllers')
 
 exports.getAllUsuarios = async (req, res) => {
     await _UtilResponse.execute(

@@ -31,7 +31,7 @@ async function startServer() {
             console.log("------------------------------------")
         })
 
-        server.on('error', () =>{
+        server.on('error', (error) =>{
             console.log(`Ocurrio un error en el servidor: ${error}`)
             console.log("------------------------------------")
             process.exit(1)

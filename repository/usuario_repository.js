@@ -3,7 +3,7 @@ const {onResultMySQL} = require('../config/connections/mysql')
 exports.postUsuario = async(nombre, apellidoP, apellidoM, username, password)=>{
     const result = await onResultMySQL(async (db)=>{
         const [rows]= await db.query(
-            "INSERT INTO usuarios (nombre, apellidoP, apellidoM, username, password, activo) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO usuario (nombre, apellidoP, apellidoM, username, password, estatus) VALUES (?, ?, ?, ?, ?, ?)",
             [nombre, apellidoP, apellidoM, username, password, 1]
         )
         return rows
@@ -17,7 +17,7 @@ exports.getAllUsuarios = async(index = 1, limit = 10)=>{
 
     const result = await onResultMySQL(async(db)=>{
         const [rows] = await db.query(
-            "SELECT idUsuario, nombre, apellidoP, apellidoM, username, activo FROM usuarios WHERE activo = 1 LIMIT ? OFFSET ?",
+            "SELECT idUsuario, nombre, apellidoP, apellidoM, username, estatus AS activo FROM usuario WHERE estatus = 1 LIMIT ? OFFSET ?",
             [limit, offset]
         )
         return rows
@@ -29,7 +29,7 @@ exports.getAllUsuarios = async(index = 1, limit = 10)=>{
 exports.getByIDUsuario = async(id)=>{
     const result = await onResultMySQL(async(db)=>{
         const [rows] = await db.query(
-            "SELECT idUsuario, nombre, apellidoP, apellidoM, username, activo FROM usuarios WHERE idUsuario = ? AND activo = 1",
+            "SELECT idUsuario, nombre, apellidoP, apellidoM, username, estatus AS activo FROM usuario WHERE idUsuario = ? AND estatus = 1",
             [id]
         )
         return rows.length > 0 ? rows[0] : null
@@ -41,7 +41,7 @@ exports.getByIDUsuario = async(id)=>{
 exports.getUsuarioByUsername = async (username)=>{
     const result =await onResultMySQL(async(db)=>{
         const [rows]=await db.query(
-            "select idUsuario, username, password from usuarios where username = ? and activo = 1",
+            "select idUsuario, username, password from usuario where username = ? and estatus = 1",
             [username]
         )
         return rows.length > 0 ? rows[0]:null;
@@ -52,7 +52,7 @@ exports.getUsuarioByUsername = async (username)=>{
 exports.deleteUsuario = async(id)=>{
     return await onResultMySQL(async(db)=>{
         const [result] = await db.query(
-            "UPDATE usuarios SET activo = 0 WHERE idUsuario = ?",
+            "UPDATE usuario SET estatus = 0 WHERE idUsuario = ?",
             [id]
         )
         return result
@@ -61,11 +61,11 @@ exports.deleteUsuario = async(id)=>{
 
 exports.updateUsuario = async(data)=>{
     return await onResultMySQL(async(db)=>{
-        let query = "UPDATE usuarios SET nombre = ?, apellidoP = ?, apellidoM = ?, username = ? WHERE idUsuario = ?"
+        let query = "UPDATE usuario SET nombre = ?, apellidoP = ?, apellidoM = ?, username = ? WHERE idUsuario = ?"
         let params = [data.nombre, data.apellidoP, data.apellidoM, data.username, data.id]
 
         if(data.password){
-            query = "UPDATE usuarios SET nombre = ?, apellidoP = ?, apellidoM = ?, username = ?, password = ? WHERE idUsuario = ?"
+            query = "UPDATE usuario SET nombre = ?, apellidoP = ?, apellidoM = ?, username = ?, password = ? WHERE idUsuario = ?"
             params = [data.nombre, data.apellidoP, data.apellidoM, data.username, data.password, data.id]
         }
 

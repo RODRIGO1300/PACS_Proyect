@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const {GetEviroment} = require("../config/enviroments/enviroment-mannager");
-const env = GetEviroment();
-const secret = env.TOKEN.secret
+const {GetEnviroment} = require("../config/enviroments/enviroment-mannager");
+const env = GetEnviroment();
+const secret = env.TOKEN.SECRET
 
 exports.GenerateToken = async (id) => {
     return new Promise((resolve, reject) => {
@@ -11,7 +11,7 @@ exports.GenerateToken = async (id) => {
                 return reject(("No hay id para injectar con en el token"));
             }    
             
-            jws.sing(
+            jwt.sign(
                 { id, type: 'usuario' },
                 secret,
                 { expiresIn: '1d' }, 

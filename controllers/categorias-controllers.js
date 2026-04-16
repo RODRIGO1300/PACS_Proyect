@@ -41,8 +41,12 @@ exports.deleteCategoria = async (id) => {
     return await categoriasRepository.deleteCategoria("idcategorias", id)
 }
 
-exports.getCategoriaById = async (id) => {
-    const {id} = id;
-    const result = await categoriasRepository.getCategoriaById("idcategorias", id)
+exports.getCategoriaById = async (paramsOrId) => {
+    const id =
+        typeof paramsOrId === "object" && paramsOrId !== null
+            ? resolveField(paramsOrId, ID_FIELDS)?.value
+            : paramsOrId
+
+    const result = await categoriasRepository.getCategoriaById(id)
     return _UtilsResponse.buildResponse(result)
 }

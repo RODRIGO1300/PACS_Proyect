@@ -1,4 +1,4 @@
-const usuarioInterface = require('../interfaces/usuario-interface')
+const usuarioInterface = require('../interfaces/usuarios-interfaces')
 const express = require('express')
 const router = express.Router()
 

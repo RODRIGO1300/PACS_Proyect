@@ -1,4 +1,4 @@
-const usuariosRepository = require('../repository/usuarios-repository')
+const usuariosRepository = require('../repository/usuario_repository')
 const _UtilResponse = require('../helpers/helper-response')
 const bcrypt = require('bcryptjs')
 

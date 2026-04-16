@@ -74,8 +74,12 @@ exports.deleteProducto = async (id) => {
   return await productosRepository.deleteProducto("idProducto", id);
 };
 
-exports.getProductoById = async (id) => {
-  const { id } = id;
-  const result = await productosRepository.getProductoById("idProducto", id);
+exports.getProductoById = async (paramsOrId) => {
+  const id =
+    typeof paramsOrId === "object" && paramsOrId !== null
+      ? resolveField(paramsOrId, ID_FIELDS)?.value
+      : paramsOrId;
+
+  const result = await productosRepository.getProductoById(id);
   return _UtilsResponse.buildResponse(result);
-}
+};

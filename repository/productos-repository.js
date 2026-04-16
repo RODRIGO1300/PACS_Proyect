@@ -77,3 +77,18 @@ exports.deleteProducto = async (idField, idValue) => {
 
   return result;
 };
+
+exports.getProductoById = async (id) => {
+  const result = await onResultMySQL(
+    async (db) => {
+      const [rows] = await db.query(
+        "SELECT * FROM productos WHERE idProducto = ? AND estatus = 1",
+        [id],
+      );
+      return rows.length > 0 ? rows[0] : null;
+    },
+    "producto",
+  );
+
+  return result;
+};
